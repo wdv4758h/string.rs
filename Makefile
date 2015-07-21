@@ -6,6 +6,7 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
 BUILDDIR      = build
+GITHUB_PAGES_BRANCH = gh-pages
 
 # User-friendly check for sphinx-build
 ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $$?), 1)
@@ -190,3 +191,8 @@ pseudoxml:
 	$(SPHINXBUILD) -b pseudoxml $(ALLSPHINXOPTS) $(BUILDDIR)/pseudoxml
 	@echo
 	@echo "Build finished. The pseudo-XML files are in $(BUILDDIR)/pseudoxml."
+
+github: html
+	touch $(BUILDDIR)/html/.nojekyll	# let GitHub disable Jekyll
+	ghp-import -b $(GITHUB_PAGES_BRANCH) $(BUILDDIR)/html
+	git push github --all
