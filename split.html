@@ -1,0 +1,539 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Separate Strings by Specific Separators &mdash; String.rs 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="String.rs 0.1 documentation" href="index.html"/>
+        <link rel="prev" title="Remove Leading and Trailing Characters" href="strip-trim.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+
+        
+          <a href="index.html" class="icon icon-home"> String.rs
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="strip-trim.html">Remove Leading and Trailing Characters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="strip-trim.html#python-strip-rust-trim">Python strip &amp; Rust trim</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="strip-trim.html#spaces">Spaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="strip-trim.html#any-character">Any Character</a></li>
+<li class="toctree-l3"><a class="reference internal" href="strip-trim.html#any-character-s">Any Character&#8221;s&#8221;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="strip-trim.html#complex-condition">Complex Condition</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="strip-trim.html#python-lstrip-rust-trim-left">Python lstrip &amp; Rust trim_left</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="strip-trim.html#id1">Spaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="strip-trim.html#id2">Any Character</a></li>
+<li class="toctree-l3"><a class="reference internal" href="strip-trim.html#id3">Any Character&#8221;s&#8221;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="strip-trim.html#id4">Complex Condition</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="strip-trim.html#python-rstrip-rust-trim-right">Python rstrip &amp; Rust trim_right</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="strip-trim.html#id5">Spaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="strip-trim.html#id6">Any Character</a></li>
+<li class="toctree-l3"><a class="reference internal" href="strip-trim.html#id7">Any Character&#8221;s&#8221;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="strip-trim.html#id8">Complex Condition</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Separate Strings by Specific Separators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python-split-rust-split-whitespace">Python split &amp; Rust split_whitespace</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#by-whitespace-no-upper-bound">by Whitespace (no upper bound)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#by-whitespace-with-upper-bound">by Whitespace (with upper bound)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#python-split-rust-split">Python split &amp; Rust split</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#by-any-character-no-upper-bound">by Any Character (no upper bound)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#by-any-character-s-no-upper-bound">by Any Character&#8221;s&#8221; (no upper bound)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#by-any-string-no-upper-bound">by Any String (no upper bound)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#by-any-string-s-no-upper-bound">by Any String&#8221;s&#8221; (no upper bound)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#by-complex-condition-no-upper-bound">by Complex Condition (no upper bound)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#by-regular-expression-no-upper-bound">by Regular Expression (no upper bound)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#python-split-rust-splitn">Python split &amp; Rust splitn</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#by-any-character-with-upper-bound">by Any Character (with upper bound)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#by-any-character-s-with-upper-bound">by Any Character&#8221;s&#8221; (with upper bound)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#by-any-string-with-upper-bound">by Any String (with upper bound)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#by-any-string-s-with-upper-bound">by Any String&#8221;s&#8221; (with upper bound)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#by-complex-condition-with-upper-bound">by Complex Condition (with upper bound)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#by-regular-expression-with-upper-bound">by Regular Expression (with upper bound)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#python-rsplit-rust-rsplit">Python rsplit &amp; Rust rsplit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-rsplit-rust-rsplitn">Python rsplit &amp; Rust rsplitn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-splitlines-rust-lines">Python splitlines &amp; Rust lines</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">String.rs</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Separate Strings by Specific Separators</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/split.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="separate-strings-by-specific-separators">
+<h1>Separate Strings by Specific Separators<a class="headerlink" href="#separate-strings-by-specific-separators" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="python-split-rust-split-whitespace">
+<h2>Python split &amp; Rust split_whitespace<a class="headerlink" href="#python-split-rust-split-whitespace" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="by-whitespace-no-upper-bound">
+<h3>by Whitespace (no upper bound)<a class="headerlink" href="#by-whitespace-no-upper-bound" title="Permalink to this headline">¶</a></h3>
+<p>result : [&#8220;some&#8221;, &#8220;useful&#8221;, &#8220;data&#8221;]</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Python</span>
+
+<span class="c"># Setup</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s">&quot;    some useful data    &quot;</span>
+
+<span class="c"># Get Result</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-rust"><div class="highlight"><pre><span class="c1">// Rust</span>
+
+<span class="c1">// Setup</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;    some useful data    &quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Get Result</span>
+
+<span class="c1">// .split_whitespace() will return an iterator</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">split_whitespace</span><span class="p">().</span><span class="n">collect</span><span class="p">();</span><span class="w"></span>
+<span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Vec</span><span class="o">&lt;&amp;</span><span class="kt">str</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">split_whitespace</span><span class="p">().</span><span class="n">collect</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Notice: If you use .split(&#8216; &#8216;) in Rust, you will get a different result. Like this :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Python</span>
+
+<span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">)</span>    <span class="c"># [&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;some&quot;, &quot;useful&quot;, &quot;data&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;]</span>
+</pre></div>
+</div>
+<div class="highlight-rust"><div class="highlight"><pre><span class="c1">// Rust</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="sc">&#39; &#39;</span><span class="p">).</span><span class="n">collect</span><span class="p">();</span><span class="w">       </span><span class="c1">// [&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;some&quot;, &quot;useful&quot;, &quot;data&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;]</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Vec</span><span class="o">&lt;&amp;</span><span class="kt">str</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="sc">&#39; &#39;</span><span class="p">).</span><span class="n">collect</span><span class="p">();</span><span class="w">    </span><span class="c1">// [&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;some&quot;, &quot;useful&quot;, &quot;data&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="by-whitespace-with-upper-bound">
+<h3>by Whitespace (with upper bound)<a class="headerlink" href="#by-whitespace-with-upper-bound" title="Permalink to this headline">¶</a></h3>
+<p>result : [&#8220;some&#8221;, &#8220;useful data    &#8220;]</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Python</span>
+
+<span class="c"># Setup</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s">&quot;    some useful data    &quot;</span>
+
+<span class="c"># Get Result</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">maxsplit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-rust"><div class="highlight"><pre><span class="c1">// Rust</span>
+
+<span class="c1">// Setup</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;    some useful data    &quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Get Result</span>
+
+<span class="p">[</span><span class="n">TODO</span><span class="p">]</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="python-split-rust-split">
+<h2>Python split &amp; Rust split<a class="headerlink" href="#python-split-rust-split" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="by-any-character-no-upper-bound">
+<h3>by Any Character (no upper bound)<a class="headerlink" href="#by-any-character-no-upper-bound" title="Permalink to this headline">¶</a></h3>
+<p>result : [&#8220;col1&#8221;, &#8220;col2&#8221;, &#8220;col3&#8221;, &#8220;col4&#8221;]</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Python</span>
+
+<span class="c"># Setup</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s">&quot;col1,col2,col3,col4&quot;</span>
+
+<span class="c"># Get Result</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-rust"><div class="highlight"><pre><span class="c1">// Rust</span>
+
+<span class="c1">// Setup</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;col1,col2,col3,col4&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Get Result</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="o">:</span><span class="w"> </span><span class="n">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="sc">&#39;,&#39;</span><span class="p">).</span><span class="n">collect</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="by-any-character-s-no-upper-bound">
+<h3>by Any Character&#8221;s&#8221; (no upper bound)<a class="headerlink" href="#by-any-character-s-no-upper-bound" title="Permalink to this headline">¶</a></h3>
+<p>result : [&#8220;col1&#8221;, &#8220;&#8221;, &#8220;col2&#8221;, &#8220;&#8221;, &#8220;col3&#8221;, &#8220;&#8221;, &#8220;col4&#8221;]</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Python</span>
+
+<span class="c"># Setup</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s">&quot;col1!?col2?!col3!?col4&quot;</span>
+
+<span class="c"># Get Result</span>
+
+<span class="p">[</span><span class="n">TODO</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-rust"><div class="highlight"><pre><span class="c1">// Rust</span>
+
+<span class="c1">// Setup</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;col1!?col2?!col3!?col4&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Get Result</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="o">:</span><span class="w"> </span><span class="n">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="o">|</span><span class="n">c</span><span class="o">:</span><span class="w"> </span><span class="n">char</span><span class="o">|</span><span class="w"> </span><span class="s">&quot;!?&quot;</span><span class="p">.</span><span class="n">contains</span><span class="p">(</span><span class="n">c</span><span class="p">)).</span><span class="n">collect</span><span class="p">();</span><span class="w"></span>
+<span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="o">:</span><span class="w"> </span><span class="n">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="o">|</span><span class="n">c</span><span class="o">:</span><span class="w"> </span><span class="n">char</span><span class="o">|</span><span class="w"> </span><span class="kt">str</span><span class="o">::</span><span class="n">contains</span><span class="p">(</span><span class="s">&quot;?!&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">)).</span><span class="n">collect</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="by-any-string-no-upper-bound">
+<h3>by Any String (no upper bound)<a class="headerlink" href="#by-any-string-no-upper-bound" title="Permalink to this headline">¶</a></h3>
+<p>result : [&#8220;col1&#8221;, &#8220;col2&#8221;, &#8220;col3&#8221;, &#8220;col4&#8221;]</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Python</span>
+
+<span class="c"># Setup</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s">&quot;col1::col2::col3::col4&quot;</span>
+
+<span class="c"># Get Result</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;::&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-rust"><div class="highlight"><pre><span class="c1">// Rust</span>
+
+<span class="c1">// Setup</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;col1::col2::col3::col4&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Get Result</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="o">:</span><span class="w"> </span><span class="n">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;::&quot;</span><span class="p">).</span><span class="n">collect</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="by-any-string-s-no-upper-bound">
+<h3>by Any String&#8221;s&#8221; (no upper bound)<a class="headerlink" href="#by-any-string-s-no-upper-bound" title="Permalink to this headline">¶</a></h3>
+<p>result : [&#8220;col1&#8221;, &#8220;col2&#8221;, &#8220;col3&#8221;, &#8220;col4&#8221;]</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Python</span>
+
+<span class="c"># Setup</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s">&quot;col1//col2::col3</span><span class="si">%%</span><span class="s">col4&quot;</span>
+
+<span class="c"># Get Result</span>
+
+<span class="p">[</span><span class="n">TODO</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-rust"><div class="highlight"><pre><span class="c1">// Rust</span>
+
+<span class="c1">// Setup</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;col1//col2::col3%%col4&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Get Result</span>
+
+<span class="p">[</span><span class="n">TODO</span><span class="p">]</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="by-complex-condition-no-upper-bound">
+<h3>by Complex Condition (no upper bound)<a class="headerlink" href="#by-complex-condition-no-upper-bound" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="by-regular-expression-no-upper-bound">
+<h3>by Regular Expression (no upper bound)<a class="headerlink" href="#by-regular-expression-no-upper-bound" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="python-split-rust-splitn">
+<h2>Python split &amp; Rust splitn<a class="headerlink" href="#python-split-rust-splitn" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="by-any-character-with-upper-bound">
+<h3>by Any Character (with upper bound)<a class="headerlink" href="#by-any-character-with-upper-bound" title="Permalink to this headline">¶</a></h3>
+<p>result : [&#8220;col1&#8221;, &#8220;col2&#8221;, &#8220;col3,col4&#8221;]</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Python</span>
+
+<span class="c"># Setup</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s">&quot;col1,col2,col3,col4&quot;</span>
+
+<span class="c"># Get Result</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>    <span class="c"># maxsplit = 2, max length is 3</span>
+</pre></div>
+</div>
+<div class="highlight-rust"><div class="highlight"><pre><span class="c1">// Rust</span>
+
+<span class="c1">// Setup</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;col1,col2,col3,col4&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Get Result</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="o">:</span><span class="w"> </span><span class="n">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">splitn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;,&#39;</span><span class="p">).</span><span class="n">collect</span><span class="p">();</span><span class="w">    </span><span class="c1">// count = 3, max length is 3</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="by-any-character-s-with-upper-bound">
+<h3>by Any Character&#8221;s&#8221; (with upper bound)<a class="headerlink" href="#by-any-character-s-with-upper-bound" title="Permalink to this headline">¶</a></h3>
+<p>result : [&#8220;col1&#8221;, &#8220;&#8221;, &#8220;col2&#8221;, &#8220;&#8221;, &#8220;col3!?col4&#8221;]</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Python</span>
+
+<span class="c"># Setup</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s">&quot;col1!?col2?!col3!?col4&quot;</span>
+
+<span class="c"># Get Result</span>
+
+<span class="p">[</span><span class="n">TODO</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-rust"><div class="highlight"><pre><span class="c1">// Rust</span>
+
+<span class="c1">// Setup</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;col1!?col2?!col3!?col4&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Get Result</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="o">:</span><span class="w"> </span><span class="n">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">splitn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="o">|</span><span class="n">c</span><span class="o">:</span><span class="w"> </span><span class="n">char</span><span class="o">|</span><span class="w"> </span><span class="s">&quot;!?&quot;</span><span class="p">.</span><span class="n">contains</span><span class="p">(</span><span class="n">c</span><span class="p">)).</span><span class="n">collect</span><span class="p">();</span><span class="w">         </span><span class="c1">// count = 3, max length is 3</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="o">:</span><span class="w"> </span><span class="n">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">splitn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="o">|</span><span class="n">c</span><span class="o">:</span><span class="w"> </span><span class="n">char</span><span class="o">|</span><span class="w"> </span><span class="kt">str</span><span class="o">::</span><span class="n">contains</span><span class="p">(</span><span class="s">&quot;?!&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">)).</span><span class="n">collect</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="by-any-string-with-upper-bound">
+<h3>by Any String (with upper bound)<a class="headerlink" href="#by-any-string-with-upper-bound" title="Permalink to this headline">¶</a></h3>
+<p>result : [&#8220;col1&#8221;, &#8220;col2&#8221;, &#8220;col3::col4&#8221;]</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Python</span>
+
+<span class="c"># Setup</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s">&quot;col1::col2::col3::col4&quot;</span>
+
+<span class="c"># Get Result</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;::&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>   <span class="c"># maxsplit = 2, max length is 3</span>
+</pre></div>
+</div>
+<div class="highlight-rust"><div class="highlight"><pre><span class="c1">// Rust</span>
+
+<span class="c1">// Setup</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;col1::col2::col3::col4&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Get Result</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="o">:</span><span class="w"> </span><span class="n">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">splitn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;::&quot;</span><span class="p">).</span><span class="n">collect</span><span class="p">();</span><span class="w">   </span><span class="c1">// count = 3, max length is 3</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="by-any-string-s-with-upper-bound">
+<h3>by Any String&#8221;s&#8221; (with upper bound)<a class="headerlink" href="#by-any-string-s-with-upper-bound" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="by-complex-condition-with-upper-bound">
+<h3>by Complex Condition (with upper bound)<a class="headerlink" href="#by-complex-condition-with-upper-bound" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="by-regular-expression-with-upper-bound">
+<h3>by Regular Expression (with upper bound)<a class="headerlink" href="#by-regular-expression-with-upper-bound" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="python-rsplit-rust-rsplit">
+<h2>Python rsplit &amp; Rust rsplit<a class="headerlink" href="#python-rsplit-rust-rsplit" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="python-rsplit-rust-rsplitn">
+<h2>Python rsplit &amp; Rust rsplitn<a class="headerlink" href="#python-rsplit-rust-rsplitn" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="python-splitlines-rust-lines">
+<h2>Python splitlines &amp; Rust lines<a class="headerlink" href="#python-splitlines-rust-lines" title="Permalink to this headline">¶</a></h2>
+<p>result : [&#8220;We&#8221;, &#8220;Are&#8221;, &#8220;The&#8221;, &#8220;World&#8221;, &#8220;&#8221;, &#8221;!!!&#8221;]</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Python</span>
+
+<span class="c"># Setup</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s">&quot;We</span><span class="se">\n</span><span class="s">Are</span><span class="se">\n</span><span class="s">The</span><span class="se">\n</span><span class="s">World</span><span class="se">\n\n</span><span class="s">!!!&quot;</span>
+
+<span class="c"># Get Result</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-rust"><div class="highlight"><pre><span class="c1">// Rust</span>
+
+<span class="c1">// Setup</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;We</span><span class="se">\n</span><span class="s">Are</span><span class="se">\n</span><span class="s">The</span><span class="se">\n</span><span class="s">World</span><span class="se">\n\n</span><span class="s">!!!&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Get Result</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="o">:</span><span class="w"> </span><span class="n">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">lines</span><span class="p">().</span><span class="n">collect</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="strip-trim.html" class="btn btn-neutral" title="Remove Leading and Trailing Characters" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, wdv4758h.
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
